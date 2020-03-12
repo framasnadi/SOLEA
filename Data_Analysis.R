@@ -49,7 +49,7 @@ Data <- import(filename)
 # Variables exploration
 #
 ##############  
-#  Step 1: Explore collinearity between variables with pairs plots (Zuur et al., 2009) and remove (manually) the variables that correlates (>0.6)
+#  Step 1: Explore collinearity between variables with pairs plots (Zuur et al., 2009) and remove (manually) the variables that correlates (>0.7)
 Collinearity(Data) ## After run, please check the plot in the folder Plots&Graphics"
 Data<-Data %>% dplyr::select(-Towing_speed) # After evaluating the collinearity, we decided to eliminate the variable "Towing speed"
 
@@ -101,7 +101,7 @@ if(surv_data=="Absolute")
   Surv_list<-lapply(Scenario_list, Cox_model)
   
 }
-#   SR by Scenario
+#   SO by Scenario
 
 
 ##############
@@ -126,7 +126,7 @@ Vitplot<-ggplot(plot_scenarios, aes(fill=Vitality_class, y=Percentage, x=Scenar 
           axis.text.y=element_text(colour="black", size = 8)) + ggtitle("Onboard Vitality Assessment")
 ggsave("ABCDproportion.tiff", Vitplot, path = plotdir)
 
-# plot SR histogram
+# plot SO histogram
 plot_SR<-as.data.frame(t(as.data.frame(Final_result)))%>%dplyr::rename("Scenar"="Scenario")%>%dplyr::mutate(Scen_x=as.numeric(seq(1:nrow(.))))%>%dplyr::mutate(SR=as.numeric(SR)) %>%dplyr::mutate(clr=ifelse(SR==max(SR), "green", ifelse(SR==min(SR), "red", "#999999")))
 
 colrs<-c("red" = "red", "green" = "green", "#999999" = "#999999")
